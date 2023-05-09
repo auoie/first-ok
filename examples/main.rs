@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, time::Duration};
 
 use anyhow::{anyhow, Context};
 
@@ -11,10 +11,11 @@ fn main() -> anyhow::Result<()> {
         .enable_all()
         .build()?;
     runtime.block_on(async {
-        let client = reqwest::Client::new();
-        let items = (2..=255)
-            .map(|elem| (elem, client.clone()))
-            .collect::<Vec<_>>();
+        let client = reqwest::Client::builder()
+            .trust_dns(true)
+            .timeout(Duration::from_secs(5))
+            .build()?;
+        let items = (2..=255u8).map(move |elem| (elem, client.clone()));
         let url = first_ok::get_first_ok_bounded(items, 0, move |(item, client)| async move {
             let url = format!("http://192.168.1.{}:{}", item, port);
             let response = client.get(&url).send().await?;

@@ -11,7 +11,7 @@ fn main() -> anyhow::Result<()> {
         run_many_tasks().await?;
         let _res = wait_for_first_ok_task().await;
         let _res = all_tasks_errors().await;
-        let res = first_ok::get_first_ok_bounded((1..=99).collect(), 0, move |_idx| async move {
+        let res = first_ok::get_first_ok_bounded(1..=99, 0, move |_idx: u16| async move {
             let milliseconds = 100. * 100. * rand::random::<f64>();
             let duration = tokio::time::Duration::from_millis(milliseconds as u64);
             tokio::time::sleep(duration).await;
@@ -19,8 +19,8 @@ fn main() -> anyhow::Result<()> {
         })
         .await;
         println!("get_first_ok result: {:?}", res);
-        let res = first_ok::get_first_ok_bounded((0..=10).collect(), 0, move |idx| async move {
-            let milliseconds = 10 * idx;
+        let res = first_ok::get_first_ok_bounded(1..=99, 0, move |idx: u16| async move {
+            let milliseconds = 10 * (idx as u64);
             let duration = tokio::time::Duration::from_millis(milliseconds);
             tokio::time::sleep(duration).await;
             Err::<tokio::time::Duration, tokio::time::Duration>(duration)
