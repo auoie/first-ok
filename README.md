@@ -1,7 +1,7 @@
 # first-ok
 
 This provides the function `first_ok::get_first_ok_bounded` which takes an async function and a set of items.
-It applies the function to all of the items and returns the first `Ok` result.
+It applies the async function to all of the items and returns the first `Ok` result.
 
 ```rust
 // examples/port.rs
