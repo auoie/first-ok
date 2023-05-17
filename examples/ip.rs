@@ -12,6 +12,7 @@ fn main() -> anyhow::Result<()> {
         .build()?;
     runtime.block_on(async {
         let client = reqwest::Client::builder()
+            .use_rustls_tls()
             .trust_dns(true)
             .timeout(Duration::from_secs(5))
             .build()?;
