@@ -1,6 +1,6 @@
 [package]
 name = "first-ok"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 repository = "https://github.com/auoie/first-ok"
 authors = ["auoie"]
@@ -15,7 +15,7 @@ It applies the async function to all of the items and returns the first `Ok` res
 [dependencies]
 async-channel = "1.8.0"
 futures = "0.3.28"
-tokio = { version = "1.28.1", features = ["rt-multi-thread", "macros", "sync"] }
+tokio = { version = "1.28.2", features = ["rt-multi-thread", "macros", "sync"] }
 
 [dev-dependencies]
 anyhow = "1.0.71"
